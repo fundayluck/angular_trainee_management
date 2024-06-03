@@ -1,0 +1,98 @@
+<p-sidebar [(visible)]="visibleSidebar" position="top" [fullScreen]="true">
+  <div class="flex flex-col cursor-pointer">
+    <p-accordion [activeIndex]="0">
+      <ng-container *ngFor="let tab of sidebarItems">
+        <p-accordionTab *ngIf="tab.child" iconPos="end">
+          <ng-template pTemplate="header">
+            <span class="font-bold">{{ tab.label }}</span>
+          </ng-template>
+          <ng-container *ngFor="let item of tab.child">
+            <p
+              routerLink="{{ item.to }}"
+              (click)="visibleSidebar = false"
+              class="p-2"
+            >
+              {{ item.label }}
+            </p>
+          </ng-container>
+        </p-accordionTab>
+      </ng-container>
+    </p-accordion>
+    <ng-container *ngFor="let tab of sidebarItems">
+      <div *ngIf="!tab.child" class="pl-4 font-bold p-2 hover:bg-gray-200">
+        <a routerLink="{{ tab.to }}" (click)="visibleSidebar = false">
+          {{ tab.label }}
+        </a>
+      </div>
+    </ng-container>
+  </div>
+</p-sidebar>
+
+<div
+  class="fixed flex w-full bg-[#007ad9] align-center p-2 justify-between text-white"
+>
+  <button
+    pButton
+    type="button"
+    icon="pi pi-bars"
+    class="p-button-rounded p-button-text text-white"
+    (click)="visibleSidebar = true"
+  ></button>
+
+  <button (click)="toggleAvatar()" class="mr-2">
+    <p-avatar
+      image="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww"
+      class="mr-2"
+      size="normal"
+      shape="circle"
+    />
+  </button>
+  <p-menu
+    [model]="items"
+    [ngClass]="
+      visibleAvatar
+        ? 'scale-100 transition ease-linear duration-300'
+        : 'scale-0 transition ease-linear duration-300'
+    "
+    class="fixed right-2 top-10 m-2 shadow-md rounded"
+  ></p-menu>
+</div>
+
+<div
+  class="hidden md:block lg:block fixed bg-white top-0 w-[300px] h-full shadow-md"
+>
+  <div class="flex flex-col p-0">
+    <img
+      src="../../assets/images/ENIGMA_LOGO.png"
+      class="self-center"
+      width="150"
+      alt="Enigma Logo"
+    />
+    <p-divider />
+    <div class="flex flex-col cursor-pointer">
+      <p-accordion [activeIndex]="0">
+        <ng-container *ngFor="let tab of sidebarItems">
+          <p-accordionTab
+            *ngIf="tab.child"
+            [header]="tab.label"
+            headerStyleClass="font-bold pl-10"
+            iconPos="end"
+          >
+            <ng-container *ngFor="let item of tab.child">
+              <p routerLink="{{ item.to }}" class="pl-6 p-2">
+                {{ item.label }}
+              </p>
+            </ng-container>
+          </p-accordionTab>
+        </ng-container>
+      </p-accordion>
+      <ng-container *ngFor="let tab of sidebarItems">
+        <div *ngIf="!tab.child" class="pl-10 font-bold p-2 hover:bg-gray-200">
+          <a routerLink="{{ tab.to }}">
+            {{ tab.label }}
+          </a>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
