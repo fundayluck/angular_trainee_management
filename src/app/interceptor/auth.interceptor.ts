@@ -11,7 +11,7 @@ export const authInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn
 ): Observable<HttpEvent<any>> => {
   const authToken = localStorage.getItem('token');
-
+  console.log(authToken)
   if (authToken) {
     const newReq = req.clone({
       headers: req.headers.append('Authorization', `Bearer ${authToken}`),

@@ -1,101 +1,96 @@
-import { Component, HostListener } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { SidebarModule } from 'primeng/sidebar';
-import { AccordionModule } from 'primeng/accordion';
-import { AvatarModule } from 'primeng/avatar';
-import { MenuModule } from 'primeng/menu';
-import { DividerModule } from 'primeng/divider';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { UserInfo } from '../../types/types';
+import { SidebarItems, UserInfo } from '../../types/types';
+import { MatIconModule } from '@angular/material/icon';
+import { SidebarItemsCustom } from '../../types/sidebarItems';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [
-    CommonModule,
-    SidebarModule,
-    ButtonModule,
-    AvatarModule,
-    MenuModule,
-    DividerModule,
-    AccordionModule,
-    RouterLink,
-  ],
+  imports: [CommonModule, RouterLink, MatIconModule],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })
-export class LayoutComponent {
-  userInfo!: UserInfo;
+export class LayoutComponent implements OnInit {
+  userInfo: UserInfo = { role: '', email: '' };
   visibleSidebar: boolean = false;
   visibleAvatar: boolean = false;
+  sidebarItems: SidebarItems[] = [];
 
-  toggleAvatar() {
-    this.visibleAvatar = !this.visibleAvatar;
-  }
-
-  constructor(private router: Router, private messageService: MessageService) {
+  constructor(private router: Router, private sidebarService: SidebarItemsCustom) {
     const user = localStorage.getItem('userinfo');
-    this.userInfo = JSON.parse(user || '');
+    this.userInfo = JSON.parse(user || '{}');
     console.log(this.userInfo.role);
+
+    this.sidebarService.sidebarItems$.subscribe(items => {
+      this.sidebarItems = items;
+      console.log(this.sidebarItems);
+    });
   }
 
-  sidebarItems = [
-    {
-      label: 'Create user',
-
-      child: [
-        {
-          label: 'Create Trainee',
-          to: 'create-trainee',
-          icon: 'pi pi-fw pi-user-plus',
-        },
-        { label: 'Create BD', to: 'create-bd', icon: 'pi pi-fw pi-user-plus' },
-        {
-          label: 'Create Trainer',
-          to: 'create-trainer',
-          icon: 'pi pi-fw pi-user-plus',
-        },
-      ],
-    },
-    {
-      label: 'View user',
-      to: '/view-user',
-      icon: 'pi pi-fw pi-user-plus',
-    },
-  ];
+  ngOnInit() {
+    this.sidebarService.sidebarItems$.subscribe(items => {
+      this.sidebarItems = items;
+      console.log(this.sidebarItems);
+    });
+  }
 
   items = [
     {
       label: 'Profile',
       icon: 'pi pi-fw pi-user',
+      command:()=>{
+        this.toProfile()
+      }
     },
     {
       label: 'Logout',
       icon: 'pi pi-fw pi-power-off',
-      command: () => {
-        this.visibleSidebar = false;
-        localStorage.removeItem('token');
-        this.router.navigate(['/signin']);
-        this.messageService.add({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'logout Successful',
-        });
-      },
+      command:() => {
+        this.logOut()
+      }
     },
   ];
+
+  toggleAvatar() {
+    this.visibleAvatar = !this.visibleAvatar;
+  }
 
   @HostListener('document:click', ['$event'])
   handleClickOutside(event: Event) {
     const target = event.target as HTMLElement;
-    if (!target.closest('p-menu') && !target.closest('.p-avatar')) {
+    if (!target.closest('p-menu') && !target.closest('img')) {
       this.visibleAvatar = false;
     }
   }
 
   toggleSidebar() {
     this.visibleSidebar = !this.visibleSidebar;
+  }
+
+  isOpen: boolean[] = [false, false]; // Manage the state of each accordion item
+
+  toggleAccordion(index: number) {
+    console.log(index);
+    this.isOpen[index] = !this.isOpen[index];
+  }
+
+  toProfile() {
+    this.router.navigate(['/profile']);
+  }
+
+  logOut() {
+    this.visibleSidebar = false;
+    localStorage.removeItem('token');
+    localStorage.removeItem('userinfo');
+    this.router.navigateByUrl('/signin').then(() => {
+      window.location.reload()
+    });
+  }
+
+  changeUserRole(newRole: string) {
+    const updatedUserInfo: UserInfo = { ...this.userInfo, role: newRole };
+    this.sidebarService.updateUserInfo(updatedUserInfo);
   }
 }

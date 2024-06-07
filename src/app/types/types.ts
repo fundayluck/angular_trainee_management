@@ -31,3 +31,16 @@ export interface UserInfo {
   email: string;
   role: string;
 }
+
+export interface childSidebar {
+  label: string;
+  to : string;
+  icon:string
+}
+
+export interface SidebarItems {
+  label: string;
+  to?:string;
+  icon: string;
+  child?:childSidebar[]
+}

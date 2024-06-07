@@ -1,4 +1,4 @@
-<p-sidebar [(visible)]="visibleSidebar" position="top" [fullScreen]="true">
+<!-- <p-sidebar [(visible)]="visibleSidebar" position="top" [fullScreen]="true">
   <div class="flex flex-col cursor-pointer">
     <p-accordion [activeIndex]="0">
       <ng-container *ngFor="let tab of sidebarItems">
@@ -93,6 +93,78 @@
           </a>
         </div>
       </ng-container>
+    </div>
+  </div>
+</div> -->
+
+<div
+  class="fixed flex w-full bg-[#007ad9] align-center p-2 justify-between text-white"
+>
+  <button class="hover:bg-[#007ad9]">
+    <mat-icon class="text-white text-3xl">menu</mat-icon>
+  </button>
+  <button class="p-menu" (click)="toggleAvatar()">
+    <img
+      class="inline-block h-10 w-10 rounded-full ring-white"
+      src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      alt=""
+    />
+  </button>
+
+  <div
+    [ngClass]="
+      visibleAvatar
+        ? 'scale-100 transition ease-linear duration-300'
+        : 'scale-0 transition ease-linear duration-300'
+    "
+    class="fixed bg-white w-[150px] right-4 top-16 shadow-md rounded"
+  >
+    @for (item of items; track $index) {
+
+        <div (click)="item.command()" class="p-2 text-gray-700 cursor-pointer hover:bg-gray-200">
+          {{ item.label }}
+        </div>
+
+    }
+  </div>
+</div>
+<div
+  class="hidden md:block lg:block fixed bg-white top-0 w-[300px] h-full shadow-md"
+>
+  <div class="flex flex-col p-4">
+    <img
+      src="../../assets/images/ENIGMA_LOGO.png"
+      class="self-center mb-6"
+      width="150"
+      alt="Enigma Logo"
+    />
+    <div class="flex flex-col cursor-pointer space-y-2">
+      @for (item of sidebarItems; track $index) {
+      <div *ngIf="item.child" class="accordion">
+        <button
+          (click)="toggleAccordion($index)"
+          class="accordion-header text-left focus:outline-none w-full p-2 hover:bg-gray-200 font-bold"
+        >
+          {{ item.label }}
+        </button>
+        <div
+          [ngClass]="{ 'max-h-0 overflow-hidden': !isOpen[$index],  'max-h-screen transition-max-height duration-500 ease-in-out': isOpen[$index] }"
+          class="pl-2 space-y-1"
+        >
+          @for (item of item.child; track $index) {
+          <a routerLink="{{ item.to }}" class="block pl-2 hover:bg-gray-200">
+            <p class="self-center">{{ item.label }}</p>
+          </a>
+          }
+        </div>
+      </div>
+
+      <div *ngIf="!item.child" class="font-bold p-2 hover:bg-gray-200">
+        <a routerLink="{{ item.to }}" class="block">
+          {{ item.label }}
+        </a>
+      </div>
+      }
     </div>
   </div>
 </div>

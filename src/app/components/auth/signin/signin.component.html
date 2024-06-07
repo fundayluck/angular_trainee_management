@@ -9,7 +9,6 @@
       <div class="flex flex-col gap-4">
         <label for="email" class="text-lg font-medium">Email</label>
         <input
-          pInputText
           id="email"
           aria-describedby="email-help"
           formControlName="email"
@@ -19,8 +18,7 @@
       <div class="flex flex-col gap-4 mt-4">
         <label for="password" class="text-lg font-medium">Password</label>
         <input
-          pInputText
-          id="password"
+          [type]="isShowPassword ? 'text' : 'password'"
           aria-describedby="password-help"
           formControlName="password"
           class="border border-black rounded w-full p-3"
@@ -28,17 +26,12 @@
       </div>
 
       <button
-        pButton
-        pRipple
         class="flex justify-center items-center mt-6 w-full p-3 bg-[#233F93] text-white rounded text-lg font-semibold"
         type="submit"
-        [label]="isLoading ? '' : 'Sign in'"
       >
-        <i
-          *ngIf="isLoading"
-          class="pi pi-spin pi-spinner"
-          style="font-size: 1.5rem"
-        ></i>
+        @if(isLoading) {
+        <mat-icon class="animate-spin">refresh</mat-icon>
+        }@else { Sign In }
       </button>
     </form>
   </div>

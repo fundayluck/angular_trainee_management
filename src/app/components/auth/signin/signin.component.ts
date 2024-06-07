@@ -10,13 +10,9 @@ import { finalize } from 'rxjs';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { Router } from '@angular/router';
 
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { MessagesModule } from 'primeng/messages';
-import { ButtonModule } from 'primeng/button';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { UserInfo } from '../../../types/types';
+import { MatIconModule } from '@angular/material/icon';
 
 interface CustomJwtPayload extends JwtPayload {
   role: string;
@@ -25,19 +21,12 @@ interface CustomJwtPayload extends JwtPayload {
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [
-    FloatLabelModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    CommonModule,
-    JsonPipe,
-    MessagesModule,
-    ToastModule,
-  ],
+  imports: [ReactiveFormsModule, CommonModule, JsonPipe, MatIconModule],
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css'],
 })
 export class SigninComponent {
+  isShowPassword = false;
   isLoading = false;
   userInfo!: UserInfo;
   signinForm = new FormGroup({
@@ -48,11 +37,7 @@ export class SigninComponent {
     password: new FormControl(''),
   });
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private messageService: MessageService
-  ) {
+  constructor(private authService: AuthService, private router: Router) {
     const token = localStorage.getItem('token');
     if (token) {
       this.router.navigate(['/']);
@@ -88,11 +73,11 @@ export class SigninComponent {
 
           localStorage.setItem('userinfo', JSON.stringify(this.userInfo));
 
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Login Successful',
-          });
+          // this.messageService.add({
+          //   severity: 'success',
+          //   summary: 'Success',
+          //   detail: 'Login Successful',
+          // });
           this.router.navigate(['/']);
         },
         error: ({ error }) => {
@@ -100,21 +85,13 @@ export class SigninComponent {
           this.signinForm.setErrors({
             message: error.message || 'Login failed',
           });
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: error.message || 'Login failed',
-          });
+          // this.messageService.add({
+          //   severity: 'error',
+          //   summary: 'Error',
+          //   detail: error.message || 'Login failed',
+          // });
         },
       });
-  }
-
-  showToast(): void {
-    this.messageService.add({
-      severity: 'success',
-      detail: 'toast',
-      summary: 'toast displayed',
-    });
   }
 
   showErrors() {
