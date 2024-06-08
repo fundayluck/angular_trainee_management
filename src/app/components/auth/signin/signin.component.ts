@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { UserInfo } from '../../../types/types';
 import { MatIconModule } from '@angular/material/icon';
+import { ToastrService } from 'ngx-toastr';
 
 interface CustomJwtPayload extends JwtPayload {
   role: string;
@@ -37,7 +38,11 @@ export class SigninComponent {
     password: new FormControl(''),
   });
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {
     const token = localStorage.getItem('token');
     if (token) {
       this.router.navigate(['/']);
@@ -64,7 +69,6 @@ export class SigninComponent {
           localStorage.setItem('token', response.data.token);
 
           let role = jwtDecode<CustomJwtPayload>(response.data.token).role;
-          console.log(role);
 
           this.userInfo = {
             email: response.data.email,
@@ -73,11 +77,7 @@ export class SigninComponent {
 
           localStorage.setItem('userinfo', JSON.stringify(this.userInfo));
 
-          // this.messageService.add({
-          //   severity: 'success',
-          //   summary: 'Success',
-          //   detail: 'Login Successful',
-          // });
+          this.toastr.success('Login successful', 'Success');
           this.router.navigate(['/']);
         },
         error: ({ error }) => {
@@ -85,11 +85,7 @@ export class SigninComponent {
           this.signinForm.setErrors({
             message: error.message || 'Login failed',
           });
-          // this.messageService.add({
-          //   severity: 'error',
-          //   summary: 'Error',
-          //   detail: error.message || 'Login failed',
-          // });
+          this.toastr.error(error.message, 'Error');
         },
       });
   }

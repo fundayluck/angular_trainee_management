@@ -3,7 +3,7 @@ import { SidebarItems, UserInfo } from './types';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SidebarItemsCustom {
   private sidebarItemsSubject = new BehaviorSubject<SidebarItems[]>([]);
@@ -18,7 +18,6 @@ export class SidebarItemsCustom {
   private initializeUserInfo(): void {
     const user = localStorage.getItem('userinfo');
     this.userInfo = JSON.parse(user || '{}');
-    console.log(this.userInfo.role);
   }
 
   private initializeSidebarItems(): void {
@@ -36,7 +35,7 @@ export class SidebarItemsCustom {
             {
               label: 'Create BD',
               to: 'create-bd',
-              icon: 'pi pi-fw pi-user-plus'
+              icon: 'pi pi-fw pi-user-plus',
             },
             {
               label: 'Create Trainer',
@@ -51,7 +50,7 @@ export class SidebarItemsCustom {
           icon: 'pi pi-fw pi-user-plus',
         },
       ]);
-    } else if(this.userInfo.role === 'TRAINEE') {
+    } else if (this.userInfo.role === 'TRAINEE') {
       this.sidebarItemsSubject.next([
         {
           label: 'Profile',
@@ -65,7 +64,7 @@ export class SidebarItemsCustom {
             {
               label: 'Resume',
               to: 'create-bd',
-              icon: 'pi pi-fw pi-user-plus'
+              icon: 'pi pi-fw pi-user-plus',
             },
             {
               label: 'Grades',

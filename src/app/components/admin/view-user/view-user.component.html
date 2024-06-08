@@ -1,1 +1,42 @@
-<p>view-user works!</p>
+<div class="container mx-auto">
+  <div class="bg-white shadow-md rounded my-6 m-4">
+    <table class="min-w-full bg-white">
+      <thead class="bg-[#007AD9] text-white">
+        <tr>
+          <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">
+            Created At
+          </th>
+          <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Email</th>
+          <th class="w-1/4 py-3 px-4 uppercase font-semibold text-sm">Role</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <ng-container *ngIf="isLoading; else loaded">
+          <tr>
+            <td colspan="4" class="py-3 text-center">
+              <mat-icon class="text-3xl text-[#007AD9] animate-spin"
+                >refresh</mat-icon
+              >
+            </td>
+          </tr>
+        </ng-container>
+        <ng-template #loaded>
+          <ng-container *ngIf="setError !== ''; else content">
+            <tr>
+              <td colspan="4" class="py-3 text-center text-red-500">
+                {{ setError }}
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #content>
+            <tr *ngFor="let user of users">
+              <td class="w-1/4 py-3 px-4">{{ user.createdAt | date }}</td>
+              <td class="w-1/4 py-3 px-4">{{ user.email }}</td>
+              <td class="w-1/4 py-3 px-4">{{ user.role.role }}</td>
+            </tr>
+          </ng-template>
+        </ng-template>
+      </tbody>
+    </table>
+  </div>
+</div>

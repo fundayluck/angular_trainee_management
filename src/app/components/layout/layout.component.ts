@@ -18,21 +18,21 @@ export class LayoutComponent implements OnInit {
   visibleAvatar: boolean = false;
   sidebarItems: SidebarItems[] = [];
 
-  constructor(private router: Router, private sidebarService: SidebarItemsCustom) {
+  constructor(
+    private router: Router,
+    private sidebarService: SidebarItemsCustom
+  ) {
     const user = localStorage.getItem('userinfo');
     this.userInfo = JSON.parse(user || '{}');
-    console.log(this.userInfo.role);
 
-    this.sidebarService.sidebarItems$.subscribe(items => {
+    this.sidebarService.sidebarItems$.subscribe((items) => {
       this.sidebarItems = items;
-      console.log(this.sidebarItems);
     });
   }
 
   ngOnInit() {
-    this.sidebarService.sidebarItems$.subscribe(items => {
+    this.sidebarService.sidebarItems$.subscribe((items) => {
       this.sidebarItems = items;
-      console.log(this.sidebarItems);
     });
   }
 
@@ -40,16 +40,16 @@ export class LayoutComponent implements OnInit {
     {
       label: 'Profile',
       icon: 'pi pi-fw pi-user',
-      command:()=>{
-        this.toProfile()
-      }
+      command: () => {
+        this.toProfile();
+      },
     },
     {
       label: 'Logout',
       icon: 'pi pi-fw pi-power-off',
-      command:() => {
-        this.logOut()
-      }
+      command: () => {
+        this.logOut();
+      },
     },
   ];
 
@@ -72,7 +72,6 @@ export class LayoutComponent implements OnInit {
   isOpen: boolean[] = [false, false]; // Manage the state of each accordion item
 
   toggleAccordion(index: number) {
-    console.log(index);
     this.isOpen[index] = !this.isOpen[index];
   }
 
@@ -85,7 +84,7 @@ export class LayoutComponent implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('userinfo');
     this.router.navigateByUrl('/signin').then(() => {
-      window.location.reload()
+      window.location.reload();
     });
   }
 

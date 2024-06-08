@@ -50,7 +50,6 @@ export class CreateTraineeComponent {
       return;
     }
 
-    console.log(this.createForm.value);
     this.isLoading = true;
     this.service
       .createTrainee(this.createForm.value)
@@ -62,10 +61,9 @@ export class CreateTraineeComponent {
       .subscribe({
         next: (res) => {
           this.createForm.reset();
-          this.toastr.success('Successfully created', 'Success');
+          this.toastr.success('Successfully created trainee', 'Success');
         },
         error: (err) => {
-          console.log(err);
           this.toastr.error(err.errors, 'Error');
         },
       });
