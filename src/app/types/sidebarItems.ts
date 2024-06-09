@@ -58,24 +58,70 @@ export class SidebarItemsCustom {
           child: [
             {
               label: 'Account',
-              to: 'create-trainee',
+              to: 'account',
               icon: 'pi pi-fw pi-user-plus',
             },
             {
               label: 'Resume',
-              to: 'create-bd',
+              to: 'resume',
               icon: 'pi pi-fw pi-user-plus',
             },
             {
               label: 'Grades',
-              to: 'create-trainer',
+              to: 'grades',
               icon: 'pi pi-fw pi-user-plus',
             },
           ],
         },
         {
           label: 'Vacancy',
-          to: '/view-user',
+          to: '/vacancy',
+          icon: 'pi pi-fw pi-user-plus',
+        },
+      ]);
+    } else if (this.userInfo.role === 'BUSINESS_DEVELOPMENT') {
+      this.sidebarItemsSubject.next([
+        {
+          label: 'Dashboard',
+          to: '/dashboard-bd',
+          icon: 'pi pi-fw pi-user-plus',
+        },
+        {
+          label: 'Profile',
+          icon: '',
+          to: 'account-bd',
+        },
+        {
+          label: 'Applicants',
+          to: '/applicants',
+          icon: 'pi pi-fw pi-user-plus',
+        },
+        {
+          label: 'Vacancy',
+          to: '/vacancy-bd',
+          icon: 'pi pi-fw pi-user-plus',
+        },
+        {
+          label: 'Clients',
+          to: '/clients',
+          icon: 'pi pi-fw pi-user-plus',
+        },
+      ]);
+    } else if (this.userInfo.role === 'TRAINER') {
+      this.sidebarItemsSubject.next([
+        {
+          label: 'Dashboard',
+          to: '/dashboard-trainer',
+          icon: 'pi pi-fw pi-user-plus',
+        },
+        {
+          label: 'Profile',
+          icon: '',
+          to: 'account-trainer',
+        },
+        {
+          label: 'list of trainees',
+          to: 'list-of-trainees',
           icon: 'pi pi-fw pi-user-plus',
         },
       ]);
