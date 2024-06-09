@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { SidebarItems, UserInfo } from '../../types/types';
 import { MatIconModule } from '@angular/material/icon';
 import { SidebarItemsCustom } from '../../types/sidebarItems';
@@ -8,7 +8,7 @@ import { SidebarItemsCustom } from '../../types/sidebarItems';
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatIconModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, MatIconModule],
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
 })

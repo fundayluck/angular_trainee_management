@@ -30,9 +30,11 @@
           </ng-container>
           <ng-template #content>
             <tr *ngFor="let user of users">
-              <td class="w-1/4 py-3 px-4">{{ user.createdAt | date }}</td>
-              <td class="w-1/4 py-3 px-4">{{ user.email }}</td>
-              <td class="w-1/4 py-3 px-4">{{ user.role.role }}</td>
+              <td class="w-1/4 py-3 px-4 text-center">
+                {{ user.createdAt | date }}
+              </td>
+              <td class="w-1/4 py-3 px-4 text-center">{{ user.email }}</td>
+              <td class="w-1/4 py-3 px-4 text-center">{{ user.role.role }}</td>
             </tr>
           </ng-template>
         </ng-template>

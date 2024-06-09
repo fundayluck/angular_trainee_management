@@ -1,5 +1,9 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guard/auth.guard';
+import { adminGuard } from './guard/admin.guard';
+import { traineeGuard } from './guard/trainee.guard';
+import { bdGuard } from './guard/bd.guard';
+import { trainerGuard } from './guard/trainer.guard';
 
 export const routes: Routes = [
   {
@@ -24,6 +28,7 @@ export const routes: Routes = [
           import(
             './components/admin/create-trainee/create-trainee.component'
           ).then((m) => m.CreateTraineeComponent),
+        canActivate: [adminGuard],
       },
       {
         path: 'create-bd',
@@ -32,6 +37,7 @@ export const routes: Routes = [
           import('./components/admin/create-bd/create-bd.component').then(
             (m) => m.CreateBDComponent
           ),
+        canActivate: [adminGuard],
       },
       {
         path: 'create-trainer',
@@ -40,6 +46,7 @@ export const routes: Routes = [
           import(
             './components/admin/create-trainer/create-trainer.component'
           ).then((m) => m.CreateTrainerComponent),
+        canActivate: [adminGuard],
       },
       {
         path: 'view-user',
@@ -48,6 +55,7 @@ export const routes: Routes = [
           import('./components/admin/view-user/view-user.component').then(
             (m) => m.ViewUserComponent
           ),
+        canActivate: [adminGuard],
       },
       {
         path: 'account',
@@ -56,6 +64,7 @@ export const routes: Routes = [
           import('./components/trainee/account/account.component').then(
             (m) => m.AccountComponent
           ),
+        canActivate: [traineeGuard],
       },
       {
         path: 'resume',
@@ -64,6 +73,7 @@ export const routes: Routes = [
           import('./components/trainee/resume/resume.component').then(
             (m) => m.ResumeComponent
           ),
+        canActivate: [traineeGuard],
       },
       {
         path: 'grades',
@@ -72,6 +82,7 @@ export const routes: Routes = [
           import('./components/trainee/grades/grades.component').then(
             (m) => m.GradesComponent
           ),
+        canActivate: [traineeGuard],
       },
       {
         path: 'vacancy',
@@ -80,6 +91,7 @@ export const routes: Routes = [
           import('./components/trainee/vacancy/vacancy.component').then(
             (m) => m.VacancyComponent
           ),
+        canActivate: [traineeGuard],
       },
       {
         path: 'account-bd',
@@ -88,6 +100,7 @@ export const routes: Routes = [
           import('./components/bd/account/account.component').then(
             (m) => m.AccountComponent
           ),
+        canActivate: [bdGuard],
       },
       {
         path: 'dashboard-bd',
@@ -96,6 +109,7 @@ export const routes: Routes = [
           import('./components/bd/dashboard/dashboard.component').then(
             (m) => m.DashboardComponent
           ),
+        canActivate: [bdGuard],
       },
       {
         path: 'applicants',
@@ -104,6 +118,7 @@ export const routes: Routes = [
           import('./components/bd/aplicant/aplicant.component').then(
             (m) => m.AplicantComponent
           ),
+        canActivate: [bdGuard],
       },
       {
         path: 'vacancy-bd',
@@ -112,6 +127,7 @@ export const routes: Routes = [
           import('./components/bd/vacancy/vacancy.component').then(
             (m) => m.VacancyComponent
           ),
+        canActivate: [bdGuard],
       },
       {
         path: 'clients',
@@ -120,6 +136,7 @@ export const routes: Routes = [
           import('./components/bd/clients/clients.component').then(
             (m) => m.ClientsComponent
           ),
+        canActivate: [bdGuard],
       },
       {
         path: 'account-trainer',
@@ -128,6 +145,7 @@ export const routes: Routes = [
           import('./components/trainer/account/account.component').then(
             (m) => m.AccountComponent
           ),
+        canActivate: [trainerGuard],
       },
       {
         path: 'dashboard-trainer',
@@ -136,6 +154,7 @@ export const routes: Routes = [
           import('./components/trainer/dashboard/dashboard.component').then(
             (m) => m.DashboardComponent
           ),
+        canActivate: [trainerGuard],
       },
       {
         path: 'list-of-trainees',
@@ -144,7 +163,24 @@ export const routes: Routes = [
           import(
             './components/trainer/list-trainee/list-trainee.component'
           ).then((m) => m.ListTraineeComponent),
+        canActivate: [trainerGuard],
+      },
+      {
+        path: 'permission-denied',
+        title: 'Permission Denied',
+        loadComponent: () =>
+          import(
+            './components/permission-denied/permission-denied.component'
+          ).then((m) => m.PermissionDeniedComponent),
       },
     ],
+  },
+  {
+    path: 'unauthorized',
+    title: 'Unauthorized',
+    loadComponent: () =>
+      import('./components/unauthorized/unauthorized.component').then(
+        (m) => m.UnauthorizedComponent
+      ),
   },
 ];
