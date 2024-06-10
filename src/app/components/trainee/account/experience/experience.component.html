@@ -1,0 +1,94 @@
+<div class="bg-white shadow-md rounded my-6 m-4">
+  <div class="p-4">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold mb-4">Experience</h1>
+      <span class="cursor-pointer text-white" (click)="addExperience()">
+        <mat-icon
+          class="bg-[#007AD9] rounded transition duration-300 hover:bg-opacity-70"
+          >add</mat-icon
+        >
+      </span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4" *ngFor="let experience of experiences">
+      <div class="col-span-1">
+        <div>
+          <p class="text-lg font-bold">{{ experience.companyName }}</p>
+        </div>
+        <p>{{ experience.jobTitle }}</p>
+        <p>{{ experience.startDate }} s/d {{ experience.endDate }}</p>
+        <p>{{ experience.description }}</p>
+      </div>
+      <div class="col-span-1 flex justify-end items-center">
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          (click)="deleteExperience(experience.id)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+    <div [ngClass]="{ hidden: !modal }">
+      <div
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+      ></div>
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all p-10 left-[120px]"
+          >
+            <form
+              class="grid grid-cols-2 gap-4"
+              [formGroup]="experienceForm"
+              (ngSubmit)="createExperience()"
+            >
+              <app-input
+                inputType="text"
+                label="Company Name"
+                [control]="experienceForm.controls.companyName"
+              />
+              <app-input
+                inputType="text"
+                label="Position"
+                [control]="experienceForm.controls.position"
+              />
+              <app-input
+                inputType="text"
+                label="Start Date"
+                [control]="experienceForm.controls.startDate"
+              />
+              <app-input
+                inputType="text"
+                label="End Date"
+                [control]="experienceForm.controls.endDate"
+              />
+              <app-input
+                ngClass="col-span-2"
+                controlType="textarea"
+                label="Description"
+                [control]="experienceForm.controls.description"
+              />
+              <div class="grid grid-cols-subgrid gap-4 col-span-2">
+                <button
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-start-1"
+                  type="submit"
+                >
+                  Submit
+                </button>
+                <button
+                  class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  type="button"
+                  (click)="cancelAdd()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
