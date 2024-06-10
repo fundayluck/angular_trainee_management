@@ -1,0 +1,76 @@
+<div class="bg-white shadow-md rounded my-6 m-4">
+  <div class="p-4">
+    <h1 class="text-3xl font-bold mb-4">Biodata</h1>
+
+    <form
+      class="grid grid-cols-2 gap-4"
+      [formGroup]="traineeDetailForm"
+      (ngSubmit)="saveTraineeDetail()"
+    >
+      <app-input
+        inputType="text"
+        label="Email"
+        [control]="traineeDetailForm.controls.email"
+      />
+      <app-input
+        inputType="date"
+        label="joined At"
+        [control]="traineeDetailForm.controls.joinedAt"
+      />
+      <app-input
+        inputType="text"
+        label="First Name"
+        [control]="traineeDetailForm.controls.firstName"
+      />
+      <app-input
+        inputType="text"
+        label="Last Name"
+        [control]="traineeDetailForm.controls.lastName"
+      />
+      <app-input
+        inputType="date"
+        label="Birth Of Date"
+        [control]="traineeDetailForm.controls.dateOfBirth"
+      />
+      <app-input
+        inputType="text"
+        label="Place Of Birth"
+        [control]="traineeDetailForm.controls.placeOfBirth"
+      />
+      <app-input
+        inputType="text"
+        label="Phone Number"
+        [control]="traineeDetailForm.controls.phone"
+      />
+    </form>
+
+    @if(isEditing) {
+    <div class="flex justify-end">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+        (click)="saveTraineeDetail()"
+        [disabled]="isLoading"
+      >
+        @if(!isLoading) { Save } @else {
+        <mat-icon class="animate-spin">refresh</mat-icon>
+        }
+      </button>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+    </div>
+    } @else {
+    <div class="flex justify-end">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        (click)="editBio()"
+      >
+        Edit
+      </button>
+    </div>
+    }
+  </div>
+</div>
