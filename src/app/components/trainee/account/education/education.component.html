@@ -1,0 +1,87 @@
+<div class="bg-white shadow-md rounded my-6 m-4">
+  <div class="p-4">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold mb-4">Education</h1>
+      <span class="cursor-pointer text-white" (click)="addEducation()">
+        <mat-icon
+          class="bg-[#007AD9] rounded transition duration-300 hover:bg-opacity-70"
+          >add</mat-icon
+        >
+      </span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4" *ngFor="let education of educations">
+      <div class="col-span-1">
+        <div>
+          <p class="text-lg font-bold">{{ education.institutionName }}</p>
+        </div>
+        <p>{{ education.fieldOfStudy }}</p>
+        <p>{{ education.graduationYear }}</p>
+        <p>{{ education.cgpa | number : "1.2-2" }}</p>
+      </div>
+      <div class="col-span-1 flex justify-end items-center">
+        <button
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+          (click)="deleteEducation(education.id)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+
+    <div [ngClass]="{ hidden: !modal }">
+      <div
+        class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+      ></div>
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all p-10 left-[120px]"
+          >
+            <form
+              class="grid grid-cols-2 gap-4"
+              [formGroup]="educationForm"
+              (ngSubmit)="createEducation()"
+            >
+              <app-input
+                inputType="text"
+                label="Institution Name"
+                [control]="educationForm.controls.institutionName"
+              />
+              <app-input
+                inputType="text"
+                label="Field Of Study"
+                [control]="educationForm.controls.fieldOfStudy"
+              />
+              <app-input
+                inputType="number"
+                label="Graduation Year"
+                [control]="educationForm.controls.graduationYear"
+              />
+              <app-input
+                inputType="number"
+                label="GPA Score"
+                [control]="educationForm.controls.gpaScore"
+              />
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                type="submit"
+              >
+                Submit
+              </button>
+              <button
+                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                type="button"
+                (click)="cancelAdd()"
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
