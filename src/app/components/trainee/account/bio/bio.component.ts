@@ -70,7 +70,6 @@ export class BioComponent {
     }
     this.isLoading = true;
     this.traineeDetailForm.get('email')?.enable();
-    console.log(this.traineeDetailForm.value);
 
     this.biodataService
       .updateTraineeDetails(this.traineeDetailForm.value)
@@ -117,7 +116,7 @@ export class BioComponent {
         next: (res: any) => {
           let date = res.data.joinedAt.split('T')[0];
           let dateBirth = res.data.dateOfBirth.split('T')[0];
-          console.log(res);
+
           this.traineeDetailForm.patchValue({
             email: res.data.email,
             joinedAt: date,

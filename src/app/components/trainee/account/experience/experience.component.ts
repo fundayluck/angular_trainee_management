@@ -55,13 +55,11 @@ export class ExperienceComponent {
       .createExperience(this.experienceForm.value)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.toastr.success('Experience added successfully', 'success');
           this.experienceForm.reset();
           this.getExperienceByTraineeDetail();
         },
         error: (error) => {
-          console.log(error);
           this.toastr.error(error.error.message, 'error');
         },
       });
@@ -70,8 +68,6 @@ export class ExperienceComponent {
   getExperienceByTraineeDetail(): void {
     this.experienceService.getExperienceByTraineeDetail().subscribe(
       (res: any) => {
-        console.log(res);
-
         if (Array.isArray(res.data)) {
           this.experiences = res.data.map((experience: any) => ({
             ...experience,
@@ -97,13 +93,11 @@ export class ExperienceComponent {
       .updateExperience(updatedExperience.id, updatedExperience)
       .subscribe({
         next: (res) => {
-          console.log(res);
           this.toastr.success('Experience updated successfully', 'success');
           this.experiences[index].isEditing = false;
           this.getExperienceByTraineeDetail();
         },
         error: (error) => {
-          console.log(error);
           this.toastr.error(error.error.message, 'error');
         },
       });
@@ -112,12 +106,10 @@ export class ExperienceComponent {
   deleteExperience(experienceId: string): void {
     this.experienceService.deleteExperience(experienceId).subscribe({
       next: (res) => {
-        console.log(res);
         this.toastr.success('Experience deleted successfully', 'success');
         this.getExperienceByTraineeDetail();
       },
       error: (error) => {
-        console.log(error);
         this.toastr.error(error.error.message, 'error');
       },
     });

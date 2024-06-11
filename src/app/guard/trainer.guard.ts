@@ -5,7 +5,6 @@ export const trainerGuard: CanActivateFn = (route, state) => {
   const user = localStorage.getItem('userinfo');
   const router = inject(Router);
   let userinfo = JSON.parse(user || '{}');
-  console.log(userinfo);
 
   if (userinfo.role !== 'TRAINER') {
     router.navigate(['/permission-denied']);
