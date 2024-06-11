@@ -22,6 +22,12 @@
         </div>
         <div class="col-span-1 flex justify-end items-center">
           <div
+            class="cursor-pointer text-gray-500 hover:text-gray-700"
+            (click)="doEditSkill(skill.id)"
+          >
+            <mat-icon class="">edit</mat-icon>
+          </div>
+          <div
             class="cursor-pointer text-red-500 hover:text-red-700"
             (click)="deleteSkill(skill.id)"
           >
@@ -44,7 +50,7 @@
               <form
                 class="grid grid-cols-2 gap-4"
                 [formGroup]="skillForm"
-                (ngSubmit)="createSkill()"
+                (ngSubmit)="!isEditing ? createSkill() : editSkill()"
               >
                 <div class="flex flex-col">
                   <label for="skillSelect" class="form-label">Skill</label>
@@ -79,12 +85,22 @@
                 </div>
 
                 <div class="grid grid-cols-subgrid gap-4 col-span-2">
+                  @if (isEditing) {
+                  <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-start-1"
+                    type="submit"
+                  >
+                    Edit
+                  </button>
+                  } @else {
+
                   <button
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded col-start-1"
                     type="submit"
                   >
                     Submit
                   </button>
+                  }
                   <button
                     class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     type="button"

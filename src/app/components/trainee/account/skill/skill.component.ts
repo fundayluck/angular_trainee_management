@@ -20,6 +20,7 @@ import { SkillService } from '../../../../service/trainee/skill.service';
 })
 export class SkillComponent {
   modal: boolean = false;
+  isEditing: string = '';
   skills: any[] = [];
   availableSkills: any[] = [];
 
@@ -88,6 +89,45 @@ export class SkillComponent {
 
   AddSkill() {
     this.modal = true;
+  }
+
+  doEditSkill(id: any) {
+    this.skillService.getSkillById(id).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        let setLevel = res.data.level;
+        this.skillForm.patchValue({
+          skill: res.data.skill,
+          level: setLevel.toUpperCase(),
+        });
+        this.modal = true;
+        this.isEditing = id;
+      },
+      error: (error: any) => {
+        this.toastr.error(error.error.message);
+      },
+    });
+  }
+
+  editSkill() {
+    this.skillService
+      .updateSkill(this.isEditing, this.skillForm.value)
+      .subscribe({
+        next: (res: any) => {
+          this.toastr.success('Skill updated successfully', 'Success');
+          this.skillForm.reset();
+          this.modal = false;
+          this.isEditing = '';
+          this.getSkillByTraineeDetail();
+        },
+        error: (error: any) => {
+          this.toastr.error(error.error.message, 'Error');
+          this.skillForm.reset();
+          this.modal = false;
+          this.isEditing = '';
+          this.getSkillByTraineeDetail();
+        },
+      });
   }
 
   cancelAdd() {

@@ -14,6 +14,12 @@ export class SkillService {
     });
   }
 
+  getSkillById(id: string) {
+    return this.apiService.getMethod(`${this.url}trainee-skill/${id}`, {
+      observe: 'body',
+    });
+  }
+
   getSkillByTraineeDetail() {
     return this.apiService.getMethod(`${this.url}trainee-skill`, {
       observe: 'body',
@@ -22,6 +28,12 @@ export class SkillService {
 
   createSkill(data: any) {
     return this.apiService.postMethod(`${this.url}trainee-skill/create`, data, {
+      observe: 'body',
+    });
+  }
+
+  updateSkill(id: string, data: any) {
+    return this.apiService.putMethod(`${this.url}trainee-skill/${id}`, data, {
       observe: 'body',
     });
   }
