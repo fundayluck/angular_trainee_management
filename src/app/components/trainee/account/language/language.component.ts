@@ -34,14 +34,11 @@ export class LanguageComponent {
   ) {
     this.getLanguagesByTraineeDetail();
     this.getAvailableLanguages();
-    console.log(this.isEditing.length);
   }
 
   getAvailableLanguages() {
     this.languageService.getAllLanguages().subscribe({
       next: (res: any) => {
-        console.log(res);
-
         this.availableLanguages = res.data.map(({ id, languageName }: any) => {
           return { id, languageName };
         });
@@ -96,7 +93,6 @@ export class LanguageComponent {
   doEditLanguage(id: any) {
     this.languageService.getLanguageById(id).subscribe({
       next: (res: any) => {
-        console.log(res);
         let setLevel = res.data.level;
         this.LanguageForm.patchValue({
           language: res.data.language,

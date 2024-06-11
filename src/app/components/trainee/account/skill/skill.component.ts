@@ -94,7 +94,6 @@ export class SkillComponent {
   doEditSkill(id: any) {
     this.skillService.getSkillById(id).subscribe({
       next: (res: any) => {
-        console.log(res);
         let setLevel = res.data.level;
         this.skillForm.patchValue({
           skill: res.data.skill,
