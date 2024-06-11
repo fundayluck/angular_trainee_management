@@ -14,7 +14,7 @@ import { SkillService } from '../../../../service/trainee/skill.service';
 @Component({
   selector: 'app-skill',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, InputComponent, MatIconModule],
+  imports: [ReactiveFormsModule, CommonModule, MatIconModule],
   templateUrl: './skill.component.html',
   styleUrl: './skill.component.css',
 })

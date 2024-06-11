@@ -3,6 +3,7 @@ import { BioComponent } from './bio/bio.component';
 import { EducationComponent } from './education/education.component';
 import { ExperienceComponent } from './experience/experience.component';
 import { SkillComponent } from './skill/skill.component';
+import { LanguageComponent } from './language/language.component';
 
 @Component({
   selector: 'app-account',
@@ -12,6 +13,7 @@ import { SkillComponent } from './skill/skill.component';
     EducationComponent,
     ExperienceComponent,
     SkillComponent,
+    LanguageComponent,
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
