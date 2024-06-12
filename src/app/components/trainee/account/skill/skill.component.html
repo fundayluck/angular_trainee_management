@@ -14,10 +14,8 @@
       <div class="grid grid-cols-2 gap-4" *ngFor="let skill of skills">
         <div class="col-span-1">
           <p class="text-md font-bold">
-            {{ skill.skill }}(<span class="text-red-500 text-[10px]">{{
-              skill.level
-            }}</span
-            >)
+            {{ skill.skill }} (
+            <span class="text-red-500 text-[10px]">{{ skill.level }}</span> )
           </p>
         </div>
         <div class="col-span-1 flex justify-end items-center">

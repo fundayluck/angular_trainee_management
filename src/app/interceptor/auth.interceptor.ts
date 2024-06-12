@@ -20,8 +20,6 @@ export const authInterceptor: HttpInterceptorFn = (
   const authToken = localStorage.getItem('token');
   const router = inject(Router);
 
-  console.log(authToken);
-
   if (authToken) {
     const decodedToken: JwtPayload = jwtDecode(authToken);
     const currentTime = Math.floor(Date.now() / 1000);
