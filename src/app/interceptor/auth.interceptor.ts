@@ -26,6 +26,7 @@ export const authInterceptor: HttpInterceptorFn = (
 
     if (decodedToken.exp < currentTime) {
       localStorage.removeItem('token');
+      localStorage.removeItem('userinfo');
       router.navigate(['/signin']);
     }
 

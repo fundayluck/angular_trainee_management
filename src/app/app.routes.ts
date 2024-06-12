@@ -4,6 +4,10 @@ import { adminGuard } from './guard/admin.guard';
 import { traineeGuard } from './guard/trainee.guard';
 import { bdGuard } from './guard/bd.guard';
 import { trainerGuard } from './guard/trainer.guard';
+import { UserInfo } from './types/types';
+
+const info = localStorage.getItem('userinfo');
+const userInfo: UserInfo = JSON.parse(info || '{}');
 
 export const routes: Routes = [
   {
@@ -21,6 +25,20 @@ export const routes: Routes = [
       import('./components/home/home.component').then((m) => m.HomeComponent),
     canActivate: [authGuard],
     children: [
+      {
+        path: '',
+        redirectTo:
+          userInfo?.role === 'ADMIN'
+            ? 'view-user'
+            : userInfo?.role === 'BUSINESS_DEVELOPMENT'
+            ? 'vacancy-bd'
+            : userInfo?.role === 'TRAINEE'
+            ? 'vacancy'
+            : userInfo?.role === 'TRAINER'
+            ? 'dashboard-trainer'
+            : '',
+        pathMatch: 'full',
+      },
       {
         path: 'create-trainee',
         title: 'Admin | Create Trainee',

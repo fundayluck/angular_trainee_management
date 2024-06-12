@@ -78,8 +78,34 @@ export class SigninComponent {
           localStorage.setItem('userinfo', JSON.stringify(this.userInfo));
 
           this.toastr.success('Login successful', 'Success');
-          this.router.navigate(['/']);
+
+          // userInfo?.role === 'ADMIN'
+          // ? 'view-user'
+          // : userInfo?.role === 'BUSINESS_DEVELOPMENT'
+          // ? 'account-bd'
+          // : userInfo?.role === 'TRAINEE'
+          // ? 'vacancy'
+          // : userInfo?.role === 'TRAINER'
+          // ? 'dashboard-trainer'
+          // : '',
+
+          if (this.userInfo.role === 'ADMIN') {
+            this.router.navigate(['/view-user']);
+          }
+
+          if (this.userInfo.role === 'BUSINESS_DEVELOPMENT') {
+            this.router.navigate(['/vacancy-bd']);
+          }
+
+          if (this.userInfo.role === 'TRAINEE') {
+            this.router.navigate(['/vacancy']);
+          }
+
+          if (this.userInfo.role === 'TRAINER') {
+            this.router.navigate(['/dashboard-trainer']);
+          }
         },
+
         error: ({ error }) => {
           this.isLoading = false;
           this.signinForm.setErrors({
