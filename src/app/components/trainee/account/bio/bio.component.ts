@@ -20,7 +20,6 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class BioComponent {
   isEditing: boolean = false;
-  traineeDetail: any;
   isLoading: boolean = false;
 
   editBio() {

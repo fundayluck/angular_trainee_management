@@ -1,1 +1,66 @@
-<p>account works!</p>
+<div class="bg-white shadow-md rounded my-6 m-4">
+  <div class="p-4">
+    <h1 class="text-3xl font-bold mb-4">Biodata</h1>
+
+    <form
+      class="grid grid-cols-2 gap-4"
+      [formGroup]="trainerDetailForm"
+      (ngSubmit)="saveTrainerDetail()"
+    >
+      <app-input
+        inputType="text"
+        label="Email"
+        [control]="trainerDetailForm.controls.email"
+      />
+      <app-input
+        inputType="text"
+        label="Batch"
+        [control]="trainerDetailForm.controls.batch"
+      />
+      <app-input
+        inputType="text"
+        label="Role"
+        [control]="trainerDetailForm.controls.role"
+      />
+      <app-input
+        inputType="text"
+        label="First Name"
+        [control]="trainerDetailForm.controls.firstName"
+      />
+      <app-input
+        inputType="text"
+        label="Last Name"
+        [control]="trainerDetailForm.controls.lastName"
+      />
+    </form>
+
+    @if(isEditing) {
+    <div class="flex justify-end">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
+        (click)="saveTrainerDetail()"
+        [disabled]="isLoading"
+      >
+        @if(!isLoading) { Save } @else {
+        <mat-icon class="animate-spin">refresh</mat-icon>
+        }
+      </button>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        (click)="cancelEdit()"
+      >
+        Cancel
+      </button>
+    </div>
+    } @else {
+    <div class="flex justify-end">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        (click)="editBio()"
+      >
+        Edit
+      </button>
+    </div>
+    }
+  </div>
+</div>
