@@ -1,1 +1,13 @@
-<p>grades works!</p>
+<div class="flex flex-col justify-center items-center h-[90vh]">
+  <apx-chart
+    class="w-[500px]"
+    [series]="chartSeries"
+    [chart]="chartDetails"
+    [labels]="chartLabels"
+    [fill]="chartFill"
+    [stroke]="chartStroke"
+    [responsive]="chartResponsive"
+    [dataLabels]="chartDataLabels"
+    [title]="title"
+  ></apx-chart>
+</div>
