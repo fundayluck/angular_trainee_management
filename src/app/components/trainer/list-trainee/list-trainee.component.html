@@ -1,1 +1,187 @@
-<p>list-trainee works!</p>
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4">List Trainee</h2>
+  <div class="bg-white shadow-md rounded-lg mb-6">
+    <div class="p-4">
+      <table class="min-w-full leading-normal">
+        <thead>
+          <tr>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Name
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              FE Score
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              BE Score
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Mobile Score
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Average Score
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Batch
+            </th>
+            <th
+              class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of trainees">
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ item.firstName }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ getGrade(item.traineeGrade, "Frontend") }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ getGrade(item.traineeGrade, "Backend") }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ getGrade(item.traineeGrade, "Mobile") }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ getAverageGrade(item.traineeGrade) }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              {{ item.batch }}
+            </td>
+            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+              <button
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                (click)="editTrainee(item)"
+              >
+                Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  [ngClass]="{ hidden: !modal }"
+  class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50"
+  tabindex="-1"
+>
+  <div
+    class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-lg"
+  >
+    <div class="bg-gray-100 px-4 py-3 border-b border-gray-200">
+      <h5 class="text-lg font-medium" id="editModalLabel">Edit Trainee</h5>
+      <button
+        type="button"
+        class="text-gray-500 hover:text-gray-700 focus:outline-none"
+        data-bs-dismiss="modal"
+        aria-label="Close"
+        (click)="cancelEdit()"
+      >
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div class="p-4">
+      <form (ngSubmit)="saveEdit()">
+        <div class="mb-4">
+          <label for="firstName" class="block text-gray-700 font-medium mb-2"
+            >First Name</label
+          >
+          <input
+            type="text"
+            id="firstName"
+            [(ngModel)]="editForm.firstName"
+            name="firstName"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            for="frontendGrade"
+            class="block text-gray-700 font-medium mb-2"
+            >Frontend Grade</label
+          >
+          <input
+            type="number"
+            id="frontendGrade"
+            [(ngModel)]="editForm.frontendGrade"
+            min="0"
+            max="100"
+            name="frontendGrade"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="backendGrade" class="block text-gray-700 font-medium mb-2"
+            >Backend Grade</label
+          >
+          <input
+            type="number"
+            id="backendGrade"
+            [(ngModel)]="editForm.backendGrade"
+            name="backendGrade"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+        <div class="mb-4">
+          <label for="mobileGrade" class="block text-gray-700 font-medium mb-2"
+            >Mobile Grade</label
+          >
+          <input
+            type="number"
+            id="mobileGrade"
+            [(ngModel)]="editForm.mobileGrade"
+            name="mobileGrade"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring focus:border-blue-300"
+          />
+        </div>
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            data-bs-dismiss="modal"
+            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg mr-2"
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg"
+            (click)="cancelEdit()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
